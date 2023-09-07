@@ -26,9 +26,9 @@ pip install compdfkit-api-python
 
 You can use your **publicKey** and **secretKey** to complete the authentication. You need to [sign in](https://api.compdf.com/login) your ComPDFKit API account to get your **publicKey** and **secretKey** at the [dashboard](https://api-dashboard.compdf.com/api/keys). If you are new to ComPDFKit, click here to [sign up](https://api.compdf.com/signup) for a free trial.
 
-- Project public Key : You can find the public key in [Management Panel](https://api-dashboard.compdf.com/api/keys).
+- Project public Key: You can find the public key in the **API Keys** section of your ComPDFKit API account.
 
-- Project secret Key : You can find the secret Key in [Management Panel](https://api-dashboard.compdf.com/api/keys).
+- Project secret Key: You can find the secret key in the **API Keys** section of your ComPDFKit API account.
 
 ```python
 # Create a client
@@ -46,7 +46,7 @@ A task ID is automatically generated for you based on the type of PDF tool you c
 client = CPDFClient(public_key, secret_key)
 
 # Create a task
-# Create an example of a PDF TO WORD task
+# Create an example task to convert a PDF tO a Word
 create_task_result = client.create_task(CPDFConversionEnum.PDF_TO_WORD)
 
 # Get a task id
@@ -57,14 +57,14 @@ task_id = create_task_result.task_id
 
 ## Upload Files
 
-Upload the original file and bind the file to the task ID. The field parameter is used to pass the JSON string to set the processing parameters for the file. Each file will generate automatically a unique filekey. Please note that a maximum of five files can be uploaded for a task ID and no files can be uploaded for that task after it has started.
+Upload the original file and bind the file to the task ID. The field parameter is used to pass the JSON string to set the processing parameters for the file. Each file will generate automatically a unique file key. Please note that a maximum of five files can be uploaded for a task ID and no files can be uploaded for that task after it has started.
 
 ```python
 # Create a client
 client = CPDFClient(public_key, secret_key)
 
 # Create a task
-# Create an example of a PDF TO WORD task
+# Create an example task to convert a PDF tO a Word
 create_task_result = client.create_task(CPDFConversionEnum.PDF_TO_WORD)
 
 # Get a task id
@@ -76,7 +76,7 @@ client.upload_file(convert_file, task_id)
 
 
 
-## Execute the task
+## Execute the Task
 
 After the file upload is completed, call this interface with the task ID to process the files.
 
@@ -85,7 +85,7 @@ After the file upload is completed, call this interface with the task ID to proc
 client = CPDFClient(public_key, secret_key)
 
 # Create a task
-# Create an example of a PDF TO WORD task
+# Create an example task to convert a PDF tO a Word
 create_task_result = client.create_task(CPDFConversionEnum.PDF_TO_WORD)
 
 # Get a task id
@@ -109,7 +109,7 @@ Request task status and file-related meta data based on the task ID.
 client = CPDFClient(public_key, secret_key)
 
 # Create a task
-# Create an example of a PDF TO WORD task
+# Create an example task to convert a PDF tO a Word
 create_task_result = client.create_task(CPDFConversionEnum.PDF_TO_WORD)
 
 # Get a task id
@@ -118,7 +118,7 @@ task_id = create_task_result.task_id
 # Upload files
 client.upload_file(convert_file, task_id)
 
-# execute Task
+# execute task
 client.execute_task(task_id)
 
 # Query TaskInfo
@@ -135,4 +135,5 @@ See ***"Samples"*** folder in this folder.
 
 ## Resources
 
-* [ComPDFKit API Documentation](https://api.compdf.com/api/docs/introduction)
+- [ComPDFKit API Libraries](https://api.compdf.com/api-libraries/overview)
+- [ComPDFKit API Documentation](https://api.compdf.com/api/docs/introduction)
