@@ -855,7 +855,149 @@ class CPDFToRTFParameter(CPDFFileParameter):
         json_dict = {"isContainAnnot": self._is_contain_annot, "isContainImg": self._is_contain_img}
         return json.dumps(json_dict)
 
+class PDFToJSONParameter(CPDFFileParameter):
+    TYPE_TEXT = "0"
+    TYPE_TABLE = "1"
+    ALLOW_OCR = "1"
+    NOT_ALLOW_OCR = "0"
+    ONLY_AI_TABLE = "1"
+    NOT_ONLY_AI_TABLE = "0"
 
+    def __init__(self):
+        self._type = self.TYPE_TEXT  # Default to text extraction
+        self._is_allow_ocr = self.NOT_ALLOW_OCR  # Default to not allow OCR
+        self._is_only_ai_table = self.NOT_ONLY_AI_TABLE  # Default to not enable AI table recognition
+
+    @property
+    def type(self):
+        """
+        Options to extract contents (0: text, 1: table)
+        """
+        return self._type
+
+    @type.setter
+    def type(self, value):
+        if value not in [self.TYPE_TEXT, self.TYPE_TABLE]:
+            raise ValueError("Invalid value for type. Must be '0' or '1'.")
+        self._type = value
+
+    @property
+    def is_allow_ocr(self):
+        """
+        Whether to allow OCR (1: yes, 0: no)
+        """
+        return self._is_allow_ocr
+
+    @is_allow_ocr.setter
+    def is_allow_ocr(self, value):
+        if value not in [self.ALLOW_OCR, self.NOT_ALLOW_OCR]:
+            raise ValueError("Invalid value for isAllowOcr. Must be '1' or '0'.")
+        self._is_allow_ocr = value
+
+    @property
+    def is_only_ai_table(self):
+        """
+        Whether to enable AI to recognize table (1: yes, 0: no)
+        """
+        return self._is_only_ai_table
+
+    @is_only_ai_table.setter
+    def is_only_ai_table(self, value):
+        if value not in [self.ONLY_AI_TABLE, self.NOT_ONLY_AI_TABLE]:
+            raise ValueError("Invalid value for isOnlyAiTable. Must be '1' or '0'.")
+        self._is_only_ai_table = value
+
+    def to_cpdf_json_str(self):
+        json_dict = {
+            "type": self._type,
+            "isAllowOcr": self._is_allow_ocr,
+            "isOnlyAiTable": self._is_only_ai_table
+        }
+        return json.dumps(json_dict)
+
+class ImageToJSONParameter(CPDFFileParameter):
+    TYPE_TEXT = "0"
+    TYPE_TABLE = "1"
+    ALLOW_OCR = "1"
+    NOT_ALLOW_OCR = "0"
+    
+    # OCR Language Constants
+    UNKNOWN = 0
+    CHINESE = 1
+    CHINESE_TRA = 2
+    ENGLISH = 3
+    KOREAN = 4
+    JAPANESE = 5
+    LATIN = 6
+    DEVANAGARI = 7
+    AUTO = 8
+
+    def __init__(self):
+        super().__init__()
+        self._type = self.TYPE_TEXT  # Default to text extraction
+        self._is_allow_ocr = self.NOT_ALLOW_OCR  # Default to not allow OCR
+        self._is_contain_ocr_bg = False  # Default to not contain OCR background
+        self._ocr_language = self.AUTO  # Default to auto language detection
+
+    @property
+    def type(self):
+        return self._type
+
+    @type.setter
+    def type(self, value):
+        if value not in [self.TYPE_TEXT, self.TYPE_TABLE]:
+            raise ValueError("Invalid value for type. Must be '0' or '1'.")
+        self._type = value
+
+    @property
+    def is_allow_ocr(self):
+        return self._is_allow_ocr
+
+    @is_allow_ocr.setter
+    def is_allow_ocr(self, value):
+        if value not in [self.ALLOW_OCR, self.NOT_ALLOW_OCR]:
+            raise ValueError("Invalid value for isAllowOcr. Must be '1' or '0'.")
+        self._is_allow_ocr = value
+
+    @property
+    def is_contain_ocr_bg(self):
+        return self._is_contain_ocr_bg
+
+    @is_contain_ocr_bg.setter
+    def is_contain_ocr_bg(self, value):
+        if not isinstance(value, bool):
+            raise ValueError("Invalid value for isContainOcrBg. Must be a boolean.")
+        self._is_contain_ocr_bg = value
+
+    @property
+    def ocr_language(self):
+        return self._ocr_language
+
+    @ocr_language.setter
+    def ocr_language(self, value):
+        valid_languages = {
+            self.UNKNOWN,
+            self.CHINESE,
+            self.CHINESE_TRA,
+            self.ENGLISH,
+            self.KOREAN,
+            self.JAPANESE,
+            self.LATIN,
+            self.DEVANAGARI,
+            self.AUTO
+        }
+        if value not in valid_languages:
+            raise ValueError("Invalid value for ocrLanguage.")
+        self._ocr_language = value
+
+    def to_cpdf_json_str(self):
+        json_dict = {
+            "type": self._type,
+            "isAllowOcr": self._is_allow_ocr,
+            "isContainOcrBg": self._is_contain_ocr_bg,
+            "ocrLanguage": self._ocr_language
+        }
+        return json.dumps(json_dict)
 class CPDFToTxtParameter(CPDFFileParameter):
     pass
 

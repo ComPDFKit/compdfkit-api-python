@@ -35,6 +35,8 @@ class CPDFConversionEnum(Enum):
     PDF_TO_HTML = "pdf/html"
     PDF_TO_RTF = "pdf/rtf"
     PDF_TO_CSV = "pdf/csv"
+    PDF_TO_JSON = "pdf/json"
+    IMAGE_TO_JSON = "img/json"
 
     @staticmethod
     def get_instance(value):
