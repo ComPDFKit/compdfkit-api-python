@@ -9,7 +9,7 @@ secret_key = ""
 client = CPDFClient(public_key, secret_key)
 
 
-def pdf_to_json():
+def image_to_json():
     # Create Task
     create_task_result = client.create_task(CPDFConversionEnum.IMAGE_TO_JSON)
     # TaskId
@@ -39,4 +39,4 @@ def pdf_to_json():
 
 
 if __name__ == "__main__":
-    pdf_to_json()
+    image_to_json()
